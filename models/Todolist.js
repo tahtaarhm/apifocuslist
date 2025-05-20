@@ -12,10 +12,16 @@ const createTodo = async (activity) => {
 
 // READ ALL
 const getAllTodos = async () => {
-  const query = `SELECT * FROM todolist`;
-  const [rows] = await dbPool.execute(query);
-  return rows;
+  try {
+    const query = 'SELECT * FROM todolist';
+    const [rows] = await dbPool.execute(query);
+    return rows;
+  } catch (error) {
+    console.error("Error fetching todos:", error);
+    throw new Error('Internal Server Error');
+  }
 };
+
 
 // READ BY ID
 const getTodoById = async (id) => {
